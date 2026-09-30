@@ -2,6 +2,8 @@ package com.example.exploreintentimplisit
 
 import android.content.Intent
 import android.os.Bundle
+import android.provider.AlarmClock
+import android.provider.AlarmClock.EXTRA_SKIP_UI
 import android.widget.Button
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -14,7 +16,10 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
+
         val btnKirimPesan = findViewById<Button>(R.id.btnKirimPesan)
+        val btnSetAlarm = findViewById<Button>(R.id.btnSetAlarm)
+        val btnSetTimer = findViewById<Button>(R.id.btnSetTimer)
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -30,9 +35,30 @@ class MainActivity : AppCompatActivity() {
                 putExtra("sms_body", "ISI SMS")
                 type = "text/plain"
             }
+
             if (_sendIntent.resolveActivity(packageManager) != null) {
                 startActivity(Intent.createChooser(_sendIntent,"PILIH APLIKASI"))
             }
         }
+
+        btnSetAlarm.setOnClickListener {
+            val _alarmIntent = Intent(AlarmClock.ACTION_SET_ALARM).apply {
+                putExtra(AlarmClock.EXTRA_MESSAGE, "COBA ALARM")
+                putExtra(AlarmClock.EXTRA_HOUR, 20)
+                putExtra(AlarmClock.EXTRA_MINUTES, 15)
+                putExtra(AlarmClock.EXTRA_SKIP_UI,true)
+            }
+            startActivity(_alarmIntent)
+        }
+
+        btnSetTimer.setOnClickListener {
+            val _timerIntent = Intent(AlarmClock.ACTION_SET_TIMER).apply {
+                putExtra(AlarmClock.EXTRA_MESSAGE,"COBA ALARM")
+                putExtra(AlarmClock.EXTRA_LENGTH,20)
+                putExtra(AlarmClock.EXTRA_SKIP_UI,true)
+            }
+            startActivity(_timerIntent)
+        }
     }
 }
+
