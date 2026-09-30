@@ -11,8 +11,11 @@ import android.provider.CalendarContract
 import android.widget.Button
 import android.widget.DatePicker
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.result.contract.ActivityResultContract
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -32,6 +35,8 @@ class MainActivity : AppCompatActivity() {
         val btnOpenURL = findViewById<Button>(R.id.btnOpenURL)
         val _etURL = findViewById<EditText>(R.id.etURL)
         val btnSetEvent = findViewById<Button>(R.id.btnSetEvent)
+        val btnGetPhoto = findViewById<Button>(R.id.btnGetPhoto)
+        val _ivHasil = findViewById<ImageView>(R.id.ivHasil)
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -128,6 +133,18 @@ class MainActivity : AppCompatActivity() {
 
             datePickerDialog.show()
         }
+
+        val cameraLauncher = registerForActivityResult(
+            ActivityResultContracts.TakePicturePreview()
+        ){bitmap ->
+            if (bitmap != null){
+                _ivHasil.setImageBitmap(bitmap)
+            }
+        }
+        btnGetPhoto.setOnClickListener {
+            cameraLauncher.launch(null)
+        }
+
     }
 }
 

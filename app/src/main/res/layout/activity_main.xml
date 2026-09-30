@@ -42,4 +42,16 @@
         android:layout_height="wrap_content"
         android:text="Set Event" />
 
+    <Button
+        android:id="@+id/btnGetPhoto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Get Photo" />
+
+    <ImageView
+        android:id="@+id/ivHasil"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+
 </LinearLayout>
